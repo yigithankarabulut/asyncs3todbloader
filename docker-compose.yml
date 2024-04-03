@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+    volumes:
+      - mongodb-data:/data/db
+
+  job:
+    container_name: job
+    build:
+      context: ./job
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_PRODUCT_COLLECTION=${DB_PRODUCT_COLLECTION}
+      - DB_OBJECTINFO_COLLECTION=${DB_OBJECTINFO_COLLECTION}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    depends_on:
+      - mongodb
+    restart: on-failure
+
+  microservice:
+    container_name: microservice
+    build:
+      context: ./microservice
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_PRODUCT_COLLECTION=${DB_PRODUCT_COLLECTION}
+      - PORT=${PORT}
+    depends_on:
+      - mongodb
+    restart: on-failure
+    ports:
+      - "${PORT}:${PORT}"
+
+
+volumes:
+  mongodb-data:

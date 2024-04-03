@@ -1,0 +1,9 @@
+S3:
+  - BucketName: "bucket-name"
+    ObjectKey: "object-key.jsonl"
+  - BucketName: "bucket-name"
+    ObjectKey: "object-key.jsonl"
+  - BucketName: "bucket-name"
+    ObjectKey: "object-key.jsonl"
+  - BucketName: "bucket-name"
+    ObjectKey: "object-key.jsonl"
