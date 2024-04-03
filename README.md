@@ -34,7 +34,7 @@ RESTful API with only one GET endpoint to get a data by id from the database.
 ```
 
 ```http
-GET /api/v1/product/
+GET /api/v1/product/:id
 ```
 
 ## Project Setup and Usage
