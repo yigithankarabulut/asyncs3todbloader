@@ -19,6 +19,7 @@ var productChan chan model.Product
 var lineHandlerWorkerCount int
 var dbWriteWorkerCount int
 ```
+
 ```
 - Use MongoDB as database
 - Use Viper tool to read yml
@@ -48,6 +49,8 @@ GET /api/v1/product/:id
 - s3-objects.yml file with the following format:
 ```yaml
 S3:
+  - BucketName: "bucket-name"
+    ObjectKey: "object-key.jsonl"
   - BucketName: "bucket-name"
     ObjectKey: "object-key.jsonl"
   - BucketName: "bucket-name"
